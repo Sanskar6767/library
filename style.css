@@ -103,9 +103,9 @@ h2{
 .book-cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* adjust minmax values as needed */
-    column-gap: 16px;
+    column-gap: 3.6vw;
     padding: 16px;
-    row-gap: 40px;
+    row-gap: 60px;
 }
 
 /* codepen card magic-card */

@@ -1,32 +1,48 @@
 let container = document.querySelector('#bookCardsContainer');
 
-
-
 document.getElementById('showFormButton').addEventListener('click', function() {
     var form = document.getElementById('myForm');
     form.style.display = form.style.display === 'none' ? 'block' : 'none';
 });
 
-const myLibrary = [
-  new Book("1984", "George Orwell", 328, true),
-  new Book("To Kill a Mockingbird", "Harper Lee", 281, false),
-  new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, true),
-  new Book("One Hundred Years of Solitude", "Gabriel García Márquez", 417, false),
-  new Book("A Brief History of Time", "Stephen Hawking", 212, true)
-];
 
-function Book(bookname, author, pages, read) {
-  this.name = bookname;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
+class Book {
+  constructor(bookname, author, pages, read) {
+    this.name = bookname;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
   
-  this.toggleReadStatus = function(){
+  
+  toggleReadStatus() {
     this.read = !this.read;
-  };
+  }
 
-};
+}
 
+
+class Library {
+  constructor() {
+    this.books = [];
+  }
+
+  addBook(book) {
+    this.books.push(book);
+  }
+
+  removeBook(index) {
+    if (index >= 0 && index < this.books.length) {
+      this.books.splice(index, 1);
+    }
+  }
+}
+
+const myLibrary = new Library();
+myLibrary.addBook(new Book("1984", "George Orwell", 328, true));
+myLibrary.addBook(new Book("To Kill a Mockingbird", "Harper Lee", 281, false));
+myLibrary.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, true))
+myLibrary.addBook(new Book("One Hundred Years of Solitude", "Gabriel García Márquez", 417, false));
 
 function addBookToLibrary() {
   let bookname = document.querySelector('[name="bookname"]').value;
@@ -36,9 +52,11 @@ function addBookToLibrary() {
   let isRead = readStatus === 'read';
 
   let newBook = new Book(bookname, author, pages, isRead );
-  myLibrary.push(newBook);
+  myLibrary.addBook(newBook);
   
 };
+
+
 
 document.querySelector('#submit').addEventListener('click', (e) => {
     e.preventDefault();
@@ -51,15 +69,15 @@ document.querySelector('#submit').addEventListener('click', (e) => {
       successMsg.style.display = 'none';
     }, 3000);
 
-    showBooks(myLibrary);
+    showBooks(myLibrary.books);
 
 
 });
 
-function showBooks(myLibrary){
+function showBooks(booksArray){
   container.innerHTML= '';
-  for (let i = 0; i < myLibrary.length; i++){
-      let book = myLibrary[i];
+  for (let i = 0; i < booksArray.length; i++){
+      let book = booksArray[i];
       let newDiv = document.createElement('div');
       newDiv.classList.add('magic-card');
       let innerdiv = document.createElement('div');
@@ -84,15 +102,16 @@ function showBooks(myLibrary){
       }
       read.addEventListener('click', function(){
         let bookIndex = this.getAttribute('data-index');
-        myLibrary[bookIndex].toggleReadStatus();
-        showBooks(myLibrary);
+        booksArray[bookIndex].toggleReadStatus();
+        showBooks(booksArray);
       });
       let remove = document.createElement('button')
       remove.textContent = 'Remove'
       remove.addEventListener('click', function(){
         let bookIndex = parseInt(read.getAttribute('data-index'));
-        myLibrary.splice(bookIndex,1);
-        showBooks(myLibrary);
+        // myLibrary.splice(bookIndex,1);
+        myLibrary.removeBook(bookIndex);
+        showBooks(myLibrary.books);
       });
       name.classList.add('card-title');
       author.classList.add('card-subtitle');
@@ -112,5 +131,5 @@ function showBooks(myLibrary){
 };
 
 
-showBooks(myLibrary);
+showBooks(myLibrary.books);
 
