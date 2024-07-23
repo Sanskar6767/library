@@ -15,12 +15,6 @@
         <div>
             <h2>Library</h2>
         </div>
-        <!-- <div class="dark">
-            <ul>
-                <li><button class="theme">Light</button></li>
-                <li><button class="theme">Dark</button></li>
-            </ul>
-        </div> -->
     
     </header>
 
@@ -28,14 +22,14 @@
         <section class="formplace">
 
             <h2><button class="btn btn-primary" id="showFormButton">Add New Book</button></h2>
-            <form id="myForm" style="display: none;">
+            <form id="myForm" style="">
 
                 <div class="mb-3">
                     <input autocomplete="off" autofocus class="form-control mx-auto w-auto" type="text" name="bookname" placeholder="Bookname" required><br>
                 </div>
         
                 <div class="mb-3">
-                    <input class="form-control mx-auto w-auto" type="text" name="author" placeholder="Author" required><br>
+                    <input class="form-control mx-auto w-auto" type="text" name="author" placeholder="Author" pattern="[a-zA-Z]"><br>
                 </div>
         
                 <div class="mb-3">
@@ -54,7 +48,7 @@
                 </div>
         
                 <div class="mb-3 d-grid gap-2 col-6 mx-auto">
-                    <button class="btn btn-intermediate" id="submit">Add</button>
+                    <button class="btn btn-intermediate" id="submit" type="submit">Add</button>
                 </div>
         
             </form>

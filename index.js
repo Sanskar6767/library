@@ -58,20 +58,24 @@ function addBookToLibrary() {
 
 
 
-document.querySelector('#submit').addEventListener('click', (e) => {
+document.querySelector('#myForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    addBookToLibrary();
-    document.getElementById('myForm').reset(); // Form reset
-    // Success msg
-    let successMsg = document.getElementById('successMessage');
-    successMsg.style.display = 'block';
-    setTimeout(() => {
-      successMsg.style.display = 'none';
-    }, 3000);
+    let form = e.target;
+    if (form.checkValidity()){
+      addBookToLibrary();
+      document.getElementById('myForm').reset(); // Form reset
+      // Success msg
+      let successMsg = document.getElementById('successMessage');
+      successMsg.style.display = 'block';
+      setTimeout(() => {
+        successMsg.style.display = 'none';
+      }, 3000);
 
-    showBooks(myLibrary.books);
-
-
+      showBooks(myLibrary.books);
+    } else {
+      form.reportValidity();
+    }
+    
 });
 
 function showBooks(booksArray){
